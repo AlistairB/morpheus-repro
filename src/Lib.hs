@@ -1,3 +1,4 @@
+{-# LANGUAGE InstanceSigs #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE QuasiQuotes #-}
@@ -11,8 +12,12 @@ module Lib
 
 import Data.Morpheus.Client
 import GHC.Generics (Generic)
-import Data.Text (Text)
-import Data.Time (UTCTime)
+import Data.Text
+import Data.Time
+import Data.Functor
+import Data.Time.Format.ISO8601
+import Control.Monad.Fail
+import Data.String (fromString, IsString)
 
 someFunc :: IO ()
 someFunc = putStrLn "someFunc"
@@ -25,7 +30,7 @@ defineByDocumentFile
         defaultBranchRef {
           target {
             ... on Commit {
-               id
+              committedDate
             }
           }
         }
@@ -52,11 +57,16 @@ defineByDocumentFile
 --   parseValue _          = Left "GitTimestamp must be a String"
 --   serialize (GitTimestamp value) = String (pack $ iso8601Show value)
 
--- newtype DateTime = DateTime {
---   _datetimeTime :: UTCTime
---   } deriving (Show, Generic)
+newtype DateTime = DateTime {
+  _datetimeTime :: UTCTime
+  } deriving (Show, Generic)
 
--- instance GQLScalar DateTime where
---   parseValue (String x) = iso8601ParseM (unpack x) <&> DateTime
---   parseValue _          = Left "DateTime must be a String"
---   serialize (DateTime value) = String (pack $ iso8601Show value)
+instance GQLScalar DateTime where
+  parseValue (String x) = iso8601ParseM (unpack x) <&> DateTime
+  parseValue _          = Left "DateTime must be a String"
+  serialize (DateTime value) = String (pack $ iso8601Show value)
+
+instance IsString str => MonadFail (Either str) where
+    fail :: String -> Either str a
+    fail = Left . fromString
+    {-# INLINE fail #-}

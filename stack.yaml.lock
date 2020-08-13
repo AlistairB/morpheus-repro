@@ -10,13 +10,13 @@ packages:
     version: 0.13.0
     git: https://github.com/morpheusgraphql/morpheus-graphql.git
     pantry-tree:
-      size: 18296
-      sha256: 871b95a2a4650b28fa73f9023eae7d44d1fd6540f23628513b82e8eb6040cf07
-    commit: 57de5110e95b834fb92aba393757923273241328
+      size: 19138
+      sha256: ab7ace182a8afb0717679c0473821d43fcf6d2e6566a6844a7b266933c18b857
+    commit: 9f0608546bf23258ce49a7d5dc84a115212a2846
   original:
     subdir: morpheus-graphql-core
     git: https://github.com/morpheusgraphql/morpheus-graphql.git
-    commit: 57de5110e95b834fb92aba393757923273241328
+    commit: 9f0608546bf23258ce49a7d5dc84a115212a2846
 - completed:
     subdir: morpheus-graphql-client
     name: morpheus-graphql-client
@@ -24,15 +24,15 @@ packages:
     git: https://github.com/morpheusgraphql/morpheus-graphql.git
     pantry-tree:
       size: 1332
-      sha256: 4a25cc9dda5245379c8973c31e0cf8037344f5e713a383cea0964bf09af35140
-    commit: 57de5110e95b834fb92aba393757923273241328
+      sha256: 1d1f094ff43d442bcd0d49aca53d02df021680c64527ada61eb32c6531b463a8
+    commit: 9f0608546bf23258ce49a7d5dc84a115212a2846
   original:
     subdir: morpheus-graphql-client
     git: https://github.com/morpheusgraphql/morpheus-graphql.git
-    commit: 57de5110e95b834fb92aba393757923273241328
+    commit: 9f0608546bf23258ce49a7d5dc84a115212a2846
 snapshots:
 - completed:
-    size: 532379
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/16/8.yaml
-    sha256: 2ad3210d2ad35f3176005d68369a18e4d984517bfaa2caade76f28ed0b2e0521
-  original: lts-16.8
+    size: 532380
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/16/9.yaml
+    sha256: 14a7cec114424e4286adde73364438927a553ed248cc50f069a30a67e3ee1e69
+  original: lts-16.9
