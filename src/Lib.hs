@@ -5,9 +5,10 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Lib
-    ( someFunc
+    ( runApp
     ) where
 
 import Data.Morpheus.Client
@@ -18,26 +19,63 @@ import Data.Functor
 import Data.Time.Format.ISO8601
 import Control.Monad.Fail
 import Data.String (fromString, IsString)
-
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+import qualified Data.ByteString.Lazy as L
+import Network.HTTP.Req
+import Data.Text.Encoding
 
 defineByDocumentFile
   "./minimal-github.graphql"
   [gql|
-    query FetchRepoHeadCommit ($repoOwner: String!, $repoName: String!) {
+    query FetchRepoFile ($repoOwner: String!, $repoName: String!, $expression: String!) {
       repository(name: $repoName, owner: $repoOwner) {
-        defaultBranchRef {
-          target {
-            ... on Commit {
-              committedDate
-            }
+        object(expression: $expression) {
+          ... on Blob {
+            isTruncated
+            text
           }
         }
       }
     }
   |]
 
+runApp :: IO ()
+runApp = do
+  result <- githubFetchRepoFile
+  print result
+
+
+githubFetchRepoFile :: IO (Either String FetchRepoFile)
+githubFetchRepoFile = do
+  let args = produceFetchRepoFileInput
+      -- create new personal token https://github.com/settings/tokens
+      -- it doesn't require any additional privelages (ie. ignore all the checkboxes)
+      authToken = "insert token here"
+  qryFetchRepoFile authToken args
+
+
+qryFetchRepoFile :: Text -> FetchRepoFileArgs -> IO (Either String FetchRepoFile)
+qryFetchRepoFile = fetch . executeGraphQL
+
+produceFetchRepoFileInput :: FetchRepoFileArgs
+produceFetchRepoFileInput =
+  FetchRepoFileArgs
+    { repoOwner = "facebook",
+      repoName = "react",
+      expression = "af219cc6e6c514099a667ffab4e2d80c5c0c1bcc:.nvmrc"
+    }
+
+executeGraphQL :: Text -> L.ByteString -> IO L.ByteString
+executeGraphQL authToken payload = runReq defaultHttpConfig $ do
+    let headers = header "Content-Type" "application/json"
+               <> header "Authorization" ("token " <> encodeUtf8 authToken)
+               <> header "Accept" "application/vnd.github.antiope-preview+json"
+               <> header "User-Agent" "morpheus-repro"
+    responseBody
+        <$> req POST
+                (https "api.github.com" /: "graphql")
+                (ReqBodyLbs payload)
+                lbsResponse
+                headers
 
 -- newtype GitObjectID = GitObjectID {
 --   _gitObjectIDText :: Text
@@ -59,7 +97,7 @@ defineByDocumentFile
 
 newtype DateTime = DateTime {
   _datetimeTime :: UTCTime
-  } deriving (Show, Generic)
+  } deriving (Eq, Show, Generic)
 
 instance GQLScalar DateTime where
   parseValue (String x) = iso8601ParseM (unpack x) <&> DateTime

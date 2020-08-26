@@ -28,6 +28,8 @@ library:
     - morpheus-graphql-client
     - time
     - text
+    - bytestring
+    - req
 
 executables:
   morpheus-repro-exe:
