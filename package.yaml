@@ -30,6 +30,8 @@ library:
     - text
     - bytestring
     - req
+    - mtl
+    - safe-exceptions
 
 executables:
   morpheus-repro-exe:

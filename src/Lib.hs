@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE InstanceSigs #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -6,6 +7,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TypeApplications #-}
 
 module Lib
     ( runApp
@@ -22,6 +24,8 @@ import Data.String (fromString, IsString)
 import qualified Data.ByteString.Lazy as L
 import Network.HTTP.Req
 import Data.Text.Encoding
+import Control.Monad.Except
+import qualified Control.Exception.Safe as S
 
 defineByDocumentFile
   "./minimal-github.graphql"
@@ -76,6 +80,24 @@ executeGraphQL authToken payload = runReq defaultHttpConfig $ do
                 (ReqBodyLbs payload)
                 lbsResponse
                 headers
+
+executeGraphQLExcept :: (MonadIO m, MonadError HttpException m) => Text -> L.ByteString -> m L.ByteString
+executeGraphQLExcept authToken payload = do
+    eitherResult <-
+      liftIO $
+        S.try @_ @HttpException $
+          runReq defaultHttpConfig $ do
+            let headers = header "Content-Type" "application/json"
+                      <> header "Authorization" ("token " <> encodeUtf8 authToken)
+                      <> header "Accept" "application/vnd.github.antiope-preview+json"
+                      <> header "User-Agent" "morpheus-repro"
+            responseBody
+                <$> req POST
+                        (https "api.github.com" /: "graphql")
+                        (ReqBodyLbs payload)
+                        lbsResponse
+                        headers
+    liftEither eitherResult
 
 -- newtype GitObjectID = GitObjectID {
 --   _gitObjectIDText :: Text

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b17fd8f8d96bb4dc176ed61773a37c13f67db627ce20246e65948b0fe8228d94
+-- hash: bf12deae7acaef98a9732d0d90e16241f488a75c536bdf14d8e7dc3f0ee2ec32
 
 name:           morpheus-repro
 version:        0.1.0.0
@@ -36,7 +36,9 @@ library
       base >=4.7 && <5
     , bytestring
     , morpheus-graphql-client
+    , mtl
     , req
+    , safe-exceptions
     , text
     , time
   default-language: Haskell2010
