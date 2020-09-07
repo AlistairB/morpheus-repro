@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b17fd8f8d96bb4dc176ed61773a37c13f67db627ce20246e65948b0fe8228d94
+-- hash: 3db85467734286634d57dd8c125092b4743215868029348a9ec2fece75c3c034
 
 name:           morpheus-repro
 version:        0.1.0.0
@@ -32,6 +32,7 @@ library
       Paths_morpheus_repro
   hs-source-dirs:
       src
+  ghc-options: -Wpartial-fields
   build-depends:
       base >=4.7 && <5
     , bytestring
@@ -47,7 +48,7 @@ executable morpheus-repro-exe
       Paths_morpheus_repro
   hs-source-dirs:
       app
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wpartial-fields -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
     , morpheus-repro
@@ -60,7 +61,7 @@ test-suite morpheus-repro-test
       Paths_morpheus_repro
   hs-source-dirs:
       test
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wpartial-fields -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
     , morpheus-repro

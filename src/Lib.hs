@@ -23,6 +23,8 @@ import qualified Data.ByteString.Lazy as L
 import Network.HTTP.Req
 import Data.Text.Encoding
 
+-- add `__typename` beneath `object(expression: $expression)` to have it work when running
+
 defineByDocumentFile
   "./minimal-github.graphql"
   [gql|
@@ -37,6 +39,15 @@ defineByDocumentFile
       }
     }
   |]
+
+-- data RepositoryObjectGitObject
+--   = RepositoryObjectGitObject {__typename :: Text} |
+--     RepositoryObjectBlob {__typename :: Text,
+--                           isTruncated :: Bool,
+--                           text :: (Maybe Text)}
+--   deriving Generic
+--   deriving Show
+--   deriving Eq
 
 runApp :: IO ()
 runApp = do

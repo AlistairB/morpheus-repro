@@ -43,7 +43,7 @@ extra-deps:
   # - morpheus-graphql-core-0.13.0
   # - morpheus-graphql-client-0.13.0
   - git: https://github.com/morpheusgraphql/morpheus-graphql.git
-    commit: 3e3a00bea3e03f1e83793c4ef7fcf9c29f73d7e7
+    commit: 9d4e6347463b28484d8fee167ec05f5aec5a6164
     subdirs:
       - morpheus-graphql-core
       - morpheus-graphql-client
