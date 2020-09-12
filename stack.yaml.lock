@@ -5,31 +5,19 @@
 
 packages:
 - completed:
-    subdir: morpheus-graphql-core
-    name: morpheus-graphql-core
-    version: 0.14.1
-    git: https://github.com/morpheusgraphql/morpheus-graphql.git
+    hackage: morpheus-graphql-core-0.15.0@sha256:fd7a81ae3ba65ac60c49a48dbeceb2379f4c1cba2e6120e594283f23c1f9bbab,13414
     pantry-tree:
-      size: 20910
-      sha256: 4bb4d1cedc86f2e489c43bb7534514d2cde2356e84cfb2b8c8055e4e6ba61512
-    commit: 9d4e6347463b28484d8fee167ec05f5aec5a6164
+      size: 18495
+      sha256: 5ed727de24bbccc4079f2e78b38d257b22cceacf2080d940dd7ee654454cdd44
   original:
-    subdir: morpheus-graphql-core
-    git: https://github.com/morpheusgraphql/morpheus-graphql.git
-    commit: 9d4e6347463b28484d8fee167ec05f5aec5a6164
+    hackage: morpheus-graphql-core-0.15.0
 - completed:
-    subdir: morpheus-graphql-client
-    name: morpheus-graphql-client
-    version: 0.14.1
-    git: https://github.com/morpheusgraphql/morpheus-graphql.git
+    hackage: morpheus-graphql-client-0.15.0@sha256:af611d900b3353cadc6d3833060900b482d58213db44e59ab09963fd9b2c8171,2760
     pantry-tree:
-      size: 1655
-      sha256: a4f1f04b1df40c6f2ffc3b562d29abd896f8aa32cf09f97d59b0169ddf386966
-    commit: 9d4e6347463b28484d8fee167ec05f5aec5a6164
+      size: 1835
+      sha256: 817ed3006a1951d932c4235a2b08e696661e4b8a21835ca4b06f4ff0854ae7b0
   original:
-    subdir: morpheus-graphql-client
-    git: https://github.com/morpheusgraphql/morpheus-graphql.git
-    commit: 9d4e6347463b28484d8fee167ec05f5aec5a6164
+    hackage: morpheus-graphql-client-0.15.0
 snapshots:
 - completed:
     size: 532380
