@@ -26,7 +26,7 @@ import Data.Text.Encoding
 -- add `__typename` beneath `object(expression: $expression)` to have it work when running
 
 defineByDocumentFile
-  "./minimal-github.graphql"
+  "../minimal-github.graphql"
   [gql|
     query FetchRepoFile ($repoOwner: String!, $repoName: String!, $expression: String!) {
       repository(name: $repoName, owner: $repoOwner) {

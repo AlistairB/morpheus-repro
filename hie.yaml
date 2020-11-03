@@ -1,0 +1,13 @@
+cradle:
+  stack:
+    - path: "one/src"
+      component: "morpheus-repro:lib"
+
+    - path: "one/app/Main.hs"
+      component: "morpheus-repro:exe:morpheus-repro-exe"
+
+    - path: "one/app/Paths_morpheus_repro.hs"
+      component: "morpheus-repro:exe:morpheus-repro-exe"
+
+    - path: "one/test"
+      component: "morpheus-repro:test:morpheus-repro-test"
